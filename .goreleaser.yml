@@ -63,6 +63,24 @@ builds:
       - "-X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}}"
     goos: [ darwin ]
     goarch: [ amd64, arm64 ] # will be combined to "universal binary" (see below)
+  - id: ntfy_freebsd_amd64
+    binary: ntfy
+    env:
+      - CGO_ENABLED=1 # required for go-sqlite3
+    tags: [sqlite_omit_load_extension,osusergo,netgo]
+    ldflags:
+      - "-linkmode=external -extldflags=-static -s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}}"
+    goos: [freebsd]
+    goarch: [amd64]
+  - id: ntfy_freebsd_arm64
+    binary: ntfy
+    env:
+      - CGO_ENABLED=1 # required for go-sqlite3
+    tags: [sqlite_omit_load_extension,osusergo,netgo]
+    ldflags:
+      - "-linkmode=external -extldflags=-static -s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}}"
+    goos: [freebsd]
+    goarch: [arm64]
 nfpms:
   - package_name: ntfy
     homepage: https://heckel.io/ntfy
